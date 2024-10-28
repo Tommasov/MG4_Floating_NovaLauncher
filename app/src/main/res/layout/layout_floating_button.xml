@@ -1,7 +1,5 @@
-<Button
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<Button xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/floating_button"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="Open Nova"
-    android:background="@android:color/holo_blue_light"/>
+    android:background="@drawable/navi_icon_go_home_normal" />
