@@ -1,0 +1,4 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/navi_icon_go_home_selected" android:state_pressed="true"/>
+    <item android:drawable="@drawable/navi_icon_go_home_normal"/>
+</selector>

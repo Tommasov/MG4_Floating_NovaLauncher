@@ -2,4 +2,4 @@
     android:id="@+id/floating_button"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/navi_icon_go_home_normal" />
+    android:background="@drawable/button_selector" />

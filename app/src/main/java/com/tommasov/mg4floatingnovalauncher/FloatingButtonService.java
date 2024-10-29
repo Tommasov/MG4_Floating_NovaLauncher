@@ -66,7 +66,6 @@ public class FloatingButtonService extends Service {
             floatingButton.setOnTouchListener(new View.OnTouchListener() {
                 private int initialX;
                 private int initialY;
-                private float initialTouchX;
                 private float initialTouchY;
                 private static final int CLICK_ACTION_THRESHOLD = 10;
 
@@ -74,33 +73,38 @@ public class FloatingButtonService extends Service {
                 public boolean onTouch(View v, MotionEvent event) {
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
+                            floatingButton.setPressed(true);
                             initialX = params.x;
                             initialY = params.y;
-                            initialTouchX = event.getRawX();
                             initialTouchY = event.getRawY();
                             return true;
 
                         case MotionEvent.ACTION_MOVE:
-                            int deltaX = (int) (event.getRawX() - initialTouchX);
                             int deltaY = (int) (event.getRawY() - initialTouchY);
 
-                            if (Math.abs(deltaX) > CLICK_ACTION_THRESHOLD || Math.abs(deltaY) > CLICK_ACTION_THRESHOLD) {
-                                params.x = initialX + deltaX;
+                            if (Math.abs(deltaY) > CLICK_ACTION_THRESHOLD) {
                                 params.y = initialY + deltaY;
                                 windowManager.updateViewLayout(floatingButton, params);
                             }
                             return true;
 
                         case MotionEvent.ACTION_UP:
-                            if (Math.abs(event.getRawX() - initialTouchX) <= CLICK_ACTION_THRESHOLD &&
-                                    Math.abs(event.getRawY() - initialTouchY) <= CLICK_ACTION_THRESHOLD) {
+                            floatingButton.setPressed(false);
+
+                            if (Math.abs(event.getRawY() - initialTouchY) <= CLICK_ACTION_THRESHOLD) {
                                 floatingButton.performClick();
                             }
+
+                            return true;
+
+                        case MotionEvent.ACTION_CANCEL:
+                            floatingButton.setPressed(false);
                             return true;
                     }
                     return false;
                 }
             });
+
 
             floatingButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -114,7 +118,6 @@ public class FloatingButtonService extends Service {
                 }
             });
         } else {
-            // Permesso non concesso, ferma il servizio
             stopSelf();
         }
     }
